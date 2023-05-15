@@ -53,4 +53,4 @@ class RegisteredUserController extends Controller
         return redirect(RouteServiceProvider::HOME);
     }
 }
-//muy buenas tardes
+//muy buenas tardes a todos
