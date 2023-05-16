@@ -33,17 +33,23 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:40', 'min:5'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'phone' => ['required', 'string', 'max:15', 'min:5'],
+            'address' => ['required', 'string', 'max:200', 'min:5'],
+            'zip' => ['required', 'string', 'max:10', 'min:4'],
+            'terms' => ['required', 'accepted']
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'zip' => $request->zip,
         ]);
 
         event(new Registered($user));
@@ -53,5 +59,3 @@ class RegisteredUserController extends Controller
         return redirect(RouteServiceProvider::HOME);
     }
 }
-
-//prueba 1
