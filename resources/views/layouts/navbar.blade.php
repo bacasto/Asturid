@@ -17,6 +17,7 @@
             {{\Illuminate\Support\Facades\Auth::user()->name}}
           </a>
           <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#">Carta</a></li>
             <li><a class="dropdown-item" href="#">Mi perfil</a></li>
             <li><a class="dropdown-item" href="#">Mis pedidos</a></li>
             <li><hr class="dropdown-divider"></li>
