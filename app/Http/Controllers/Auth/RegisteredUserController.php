@@ -51,7 +51,7 @@ class RegisteredUserController extends Controller
             'address' => $request->address,
             'zip' => $request->zip,
         ]);
-
+        
         event(new Registered($user));
 
         Auth::login($user);

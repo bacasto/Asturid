@@ -15,6 +15,7 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('rol_id');
             $table->string('name', '250');
             $table->string('address', '250');
             $table->string('phone', '250');
@@ -25,6 +26,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+            $table->foreign('rol_id')->references('id')->on('roles');
             $table->engine = "innoDB";
         });
     }

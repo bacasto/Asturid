@@ -9,6 +9,7 @@ class IndexController extends Controller
 {
     public function index(){
         //dd(Auth::user(), Auth::id(), Auth::check());
-        return view('/dashboard');
+        return view('/dashboard
+        ');
     }
 }
