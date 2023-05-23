@@ -17,7 +17,6 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->unsignedBigInteger('rol_id');
             $table->string('name', '250');
-            $table->string('address', '250');
             $table->string('phone', '250');
             $table->string('address', '250');
             $table->string('email')->unique();

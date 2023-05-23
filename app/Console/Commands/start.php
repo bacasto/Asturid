@@ -40,28 +40,6 @@ class start extends Command
      */
     public function handle()
     {
-        $rolesExisten = Rol::all();
-        if(count($rolesExisten)==0){
-        $roles = ["usuario", "administrador"];
-
-        foreach($roles as $rol){
-            Rol::create([
-                'name'=>$rol,
-            ]);
-        }
-
-        $admin_id = Rol::select('id')->where('name','administrador')->first();
-
-        User::create([
-            'rol_id'=>$admin_id->id,
-            'name'=> 'Administrador',
-            'address'=>'casa del admin',
-            'phone'=>"66612345",
-            'zip'=> "11111",
-            'email'=> "admin@admin.com",
-            'password'=>Hash::make("password")
-        ]);
-    }
-        return 0;
+        
     }
 }

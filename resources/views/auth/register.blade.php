@@ -44,7 +44,6 @@
                     <input type="text" class="form-control" placeholder="direccion" name="address"
                         required>
                     </div>
-
                 </div>
                     <div class="col-md-12 mb-3">
                     <label for="validationServer053">Codigo Postal</label>
