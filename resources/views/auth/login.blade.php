@@ -32,19 +32,24 @@
                         </div>
                         <label for="remember_me" class="inline-flex items-center">
                             <input id="remember_me" type="checkbox"
-                                class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                                name="remember">
+                                   class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                   name="remember">
                             <span class="ml-2 text-sm text-gray-600">Recordar contraseña</span>
                         </label>
-                        <a class="underline text-sm text-gray-600 hover:text-gray-900" style="float: right" href="{{ route('password.request') }}">
+                        <a class="underline text-sm text-gray-600 hover:text-gray-900" style="float: right"
+                           href="{{ route('password.request') }}">
                             ¿Olvidaste tu contraseña?
                         </a>
                         <div class="col-md-12 mb-3 mt-3">
                             <button type="submit" class="btn btn-primary">Login</button>
                         </div>
                     </div>
+
                 </form>
             </div>
         </div>
     </div>
+
 @endsection
+
+
