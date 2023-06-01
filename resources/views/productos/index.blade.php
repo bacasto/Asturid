@@ -40,50 +40,71 @@
             <div class="col-md-12">
                 <div class="row">
                     <div class="col-12 col-md-6" style="margin: auto">
-                        <form action="" method="get" style="text-align: center;">
-                            <input type="search" class="form-control" name="search" placeholder="Buscar por nombre o descripcion">
+                        <form style="text-align: center;" id="form_search">
+                            @csrf
+                            <input type="search" minlength="3" maxlength="250" class="form-control" name="text_search" placeholder="Buscar por nombre o descripcion">
+                            <div id="error_text">
+
+                            </div>
                             <label>
-                                Precio minimo
-                                <input type="number" min="0" class="form-control" name="min_price">
+                                Precio mínimo
+                                <input type="number" min="0" step="0.01" class="form-control" name="min_price">
                             </label>
                             <label>
-                                Precio maximo
-                                <input type="number" min="0" class="form-control" name="max_price">
+                                Precio máximo
+                                <input type="number" max="999" step="0.01" class="form-control" name="max_price">
                             </label>
+                            <button type="button" id="btn_send_filter" style="padding: 5px" class="btn btn-primary">
+                                <i class="fa fa-search"></i>
+                            </button>
                         </form>
                     </div>
                 </div>
             </div>
 
-
-            @foreach($productos as $producto)
-
-                <div class="col-6 col-md-4 mt-4 mb-4">
-
-                    <div class="card">
-                        <div class="card-head" style="text-align: center">
-                            <h3>{{$producto->name}}</h3>
-                            <small>{{$producto->category->name}}</small>
-                        </div>
-                        <div class="card-body" style="padding-top:0px">
-                            <img style="width: 100%;height: 250px;object-fit: contain" src="{{$producto->image}}">
-                            <span>{{$producto->description}}</span>
-                            <span style="text-align: center;display: inherit;font-size: 22px;font-weight: bold"><i class="fa-solid fa-tag">{{$producto->price}}€</i></span>
-                        </div>
-                        <div class="card-footer" style="text-align: center">
-                            <button type="button" class="btn btn-primary"><i class="fa-solid fa-cart-shopping"></i> Añadir
-                                al carrito
-                            </button>
-                            <a href="{{route('show.product',$producto->id)}}" class="btn btn-success">Ver más</a>
-                        </div>
-                    </div>
+            <div id="content_products">
+                @include('productos._partial_productos')
+            </div>
 
 
-                </div>
-
-            @endforeach
 
         </div>
     </div>
 
+@endsection
+
+@section('scripts')
+    <script>
+        $('#btn_send_filter').click(()=>{
+            if($('input[name="text_search"]').val().length<3){
+                console.log('Debes escribir mas')
+                $('#error_text').html('<p style="color: red;font-weight: bold">Debes introducir al menos 3 carácteres</p>')
+                return;
+            }else{
+                $('#error_text').html('')
+            }
+            let form_data = new FormData();
+            form_data.append('_token','{{csrf_token()}}')
+            form_data.append('text',$('input[name="text_search"]').val())
+            form_data.append('p_min',$('input[name="min_price"]').val())
+            form_data.append('p_max',$('input[name="max_price"]').val())
+
+            $.ajax({
+                type:"post",
+                url: "{{route('search.products')}}",
+                contentType: false,
+                processData: false,
+                dataType:'json',
+                data: form_data,
+                success: function (response){
+                    console.log(response)
+                },
+                error: function(error){
+                    console.log("Error: "+error)
+                }
+            })
+
+
+        })
+    </script>
 @endsection

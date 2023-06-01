@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class ProductController extends Controller
 {
@@ -46,7 +47,6 @@ class ProductController extends Controller
         $users = User::all();
         return view('productos.admin.index',compact('users'));
     }
-
     public function updateProduct(Request $request){
 
         $product = Product::update([
@@ -62,4 +62,26 @@ class ProductController extends Controller
         ]);
     }
 
+
+    public function searchProducts(Request $request){
+        $p_maximo = 0;
+        $p_minimo = 0;
+
+        if($request->p_max==null){
+            $p_maximo = 999;
+        }else{
+            $p_maximo = $request->p_max;
+        }
+        if($request->p_min==null){
+            $p_minimo = 0;
+        }else{
+            $p_minimo= $request->p_min;
+        }
+        $productos = Product::where('name','like','%'.$request->text.'%')
+            ->orWhere('description','like','%'.$request->text.'%')
+            ->whereBetween('price',[$p_minimo,$p_maximo])
+            ->get();
+        $html = view('_partial_productos',compact('productos'))->render();
+        return response()->json(['status'=>'ok','html'=>$html]);
+    }
 }

@@ -17,13 +17,11 @@ Route::get('/','App\Http\Controllers\ProductController@index')->name('dashboard'
 Route::get('/producto/{id}','App\Http\Controllers\ProductController@showProduct')->name('show.product');
 
 Route::get('/producto/categoria/{id}','App\Http\Controllers\ProductController@showProductCategory')->name('show.product.category');
-
+Route::post('products_search','App\Http\Controllers\ProductController@searchProducts')->name('search.products');
 
 
 Route::group(['middleware'=>'auth'],function(){
     Route::get('/productos','App\Http\Controllers\ProductController@showProductsAdmin')->name('show.products.admin');
-
-
 
 });
 
