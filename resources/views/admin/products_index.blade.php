@@ -1,12 +1,18 @@
 @extends('layouts.app')
 
 @section('content')
+    <style>
+        #content_products, #content_users{
+            height: 60vh;
+            overflow: auto;
+        }
+    </style>
     <div class="container mt-4">
         <div class="row">
             <div class="col-12">
                 <h1>Productos</h1>
             </div>
-            <div class="col-12">
+            <div class="col-12"  id="content_products">
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
@@ -42,6 +48,7 @@
                 </div>
 
             </div>
+
         </div>
     </div>
 @endsection

@@ -29,7 +29,7 @@
                                <li><a class="dropdown-item" href="#">Mis pedidos</a></li>
                                @if(\Illuminate\Support\Facades\Auth::user()->rol_id == 2)
                                    <li><a class="dropdown-item" href="{{route('show.products.admin')}}">Editar Productos</a></li>
-                                   <li><a class="dropdown-item" href="#">Editar Usuarios</a></li>
+                                   <li><a class="dropdown-item" href="{{route('show.users.admin')}}">Editar Usuarios</a></li>
                                    <li><a class="dropdown-item" href="#">Editar Pedidos</a></li>
                                @endif
                                <li><hr class="dropdown-divider"></li>

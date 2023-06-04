@@ -27,6 +27,9 @@ class User extends Authenticatable
         'zip'
     ];
 
+    public function rol(){
+        return $this->belongsTo(Rol::class, 'rol_id','id');
+    }
     /**
      * The attributes that should be hidden for serialization.
      *

@@ -18,6 +18,7 @@
         }
 
     </style>
+
     <div class="container">
         <div class="row">
             <div class="col-12 mt-4 mb-4" style="text-align: center">
@@ -75,19 +76,27 @@
 
 @section('scripts')
     <script>
+        const MIN_LENGHT_FILTER = 2;
+        @if(isset($category_id))
+            let category_id = '{{$category_id}}'
+        @else
+            let category_id = 0
+        @endif
         $('#btn_send_filter').click(()=>{
-            if($('input[name="text_search"]').val().length<3){
+            if($('input[name="text_search"]').val().length<MIN_LENGHT_FILTER){
                 console.log('Debes escribir mas')
-                $('#error_text').html('<p style="color: red;font-weight: bold">Debes introducir al menos 3 carácteres</p>')
+                $('#error_text').html(`<p style="color: red;font-weight: bold">Debes introducir al menos ${MIN_LENGHT_FILTER} carácteres</p>`)
                 return;
             }else{
                 $('#error_text').html('')
             }
             let form_data = new FormData();
+
             form_data.append('_token','{{csrf_token()}}')
             form_data.append('text',$('input[name="text_search"]').val())
             form_data.append('p_min',$('input[name="min_price"]').val())
             form_data.append('p_max',$('input[name="max_price"]').val())
+            form_data.append('category_id',category_id)
 
             $.ajax({
                 type:"post",
@@ -97,7 +106,7 @@
                 dataType:'json',
                 data: form_data,
                 success: function (response){
-                    console.log(response)
+                    document.getElementById('content_products').innerHTML = response.html
                 },
                 error: function(error){
                     console.log("Error: "+error)

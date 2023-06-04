@@ -29,23 +29,26 @@ class ProductController extends Controller
         if($idCategory==0){
             $productos = Product::where('showProduct',1)->get();
             $category_name = "";
+            $category_id = "";
         }else{
-            $category_name = Category::find($idCategory)->name;
+            $category = Category::find($idCategory);
             $productos = Product::where('category_id',$idCategory)
                 ->where('showProduct',1)->get();
+            $category_name = $category->name;
+            $category_id = $category->id;
         }
 
         $categorias = Category::all();
-        return view('productos.index',compact('productos','categorias','category_name'));
+        return view('productos.index',compact('productos','categorias','category_name','category_id'));
     }
 
     public function showProductsAdmin(){
         $productos = Product::all();
-        return view('productos.admin.index',compact('productos'));
+        return view('admin.products_index',compact('productos'));
     }
     public function showUsersAdmin(){
         $users = User::all();
-        return view('productos.admin.index',compact('users'));
+        return view('admin.users_index',compact('users'));
     }
     public function updateProduct(Request $request){
 
@@ -77,11 +80,27 @@ class ProductController extends Controller
         }else{
             $p_minimo= $request->p_min;
         }
-        $productos = Product::where('name','like','%'.$request->text.'%')
-            ->orWhere('description','like','%'.$request->text.'%')
-            ->whereBetween('price',[$p_minimo,$p_maximo])
-            ->get();
-        $html = view('_partial_productos',compact('productos'))->render();
+
+        if($request->category_id == 0){
+            $productos = Product::where('price','>=',$p_minimo)
+                ->where('price','<=',$p_maximo)
+                ->where(function ($q) use($request){
+                    $q->where('name','like','%'.$request->text.'%')
+                        ->orWhere('description','like','%'.$request->text.'%');
+                })
+                ->get();
+        }else{
+            $productos = Product::where('price','>=',$p_minimo)
+                ->where('price','<=',$p_maximo)
+                ->where('category_id',$request->category_id)
+                ->where(function ($q) use($request){
+                    $q->where('name','like','%'.$request->text.'%')
+                        ->orWhere('description','like','%'.$request->text.'%');
+                })
+                ->get();
+        }
+
+        $html = view('productos._partial_productos',compact('productos'))->render();
         return response()->json(['status'=>'ok','html'=>$html]);
     }
 }

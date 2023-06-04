@@ -22,6 +22,7 @@ Route::post('products_search','App\Http\Controllers\ProductController@searchProd
 
 Route::group(['middleware'=>'auth'],function(){
     Route::get('/productos','App\Http\Controllers\ProductController@showProductsAdmin')->name('show.products.admin');
+    Route::get('/usuarios','App\Http\Controllers\ProductController@showUsersAdmin')->name('show.users.admin');
 
 });
 
