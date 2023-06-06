@@ -21,9 +21,10 @@ Route::post('products_search','App\Http\Controllers\ProductController@searchProd
 
 
 Route::group(['middleware'=>'auth'],function(){
-    Route::get('/productos','App\Http\Controllers\ProductController@showProductsAdmin')->name('show.products.admin');
-    Route::get('/usuarios','App\Http\Controllers\ProductController@showUsersAdmin')->name('show.users.admin');
-
+    Route::get('/productos','App\Http\Controllers\AdminController@showProductsAdmin')->name('show.products.admin');
+    Route::get('/usuarios','App\Http\Controllers\AdminController@showUsersAdmin')->name('show.users.admin');
+    Route::post('/addproduct','App\Http\Controllers\ProductController@store')->name('add.producto');
+    Route::get('/removeproduct/{id}','App\Http\Controllers\ProductController@destroy')->name('destroy.producto');
 });
 
 

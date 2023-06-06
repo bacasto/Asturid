@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration
             $table->unsignedBigInteger('category_id');
             $table->text('description');
             $table->integer('stock');
-            $table->string('image',250);
+            $table->string('image',250)->nullable(true);
             $table->decimal('price',8,2);
             $table->smallInteger('showProduct');
             $table->timestamps();
@@ -42,4 +42,3 @@ class CreateProductsTable extends Migration
         Schema::dropIfExists('products');
     }
 }
-

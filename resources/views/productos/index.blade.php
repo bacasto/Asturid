@@ -106,14 +106,12 @@
                 dataType:'json',
                 data: form_data,
                 success: function (response){
-                    document.getElementById('content_products').innerHTML = response.html
+                    $('#content_products').html(response.html)
                 },
                 error: function(error){
                     console.log("Error: "+error)
                 }
             })
-
-
         })
     </script>
 @endsection
