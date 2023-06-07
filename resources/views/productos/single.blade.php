@@ -12,7 +12,7 @@
                 <h3>{{$producto->name}}</h3>
             </div>
             <div class="col-12 col-md-6">
-                <img src="{{$producto->image}}" style="width: 100%">
+                <img src="{{asset('storage/productos/'.$producto->image)}}" style="width: 100%">
             </div>
             <div class="col-12 col-md-6 mb-4">
                 <p>{{$producto->description}}</p>

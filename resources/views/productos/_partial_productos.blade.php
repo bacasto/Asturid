@@ -7,7 +7,7 @@
                     <small>{{$producto->category->name}}</small>
                 </div>
                 <div class="card-body" style="padding-top:0px">
-                    <img style="width: 100%;height: 250px;object-fit: contain" src="{{$producto->image}}">
+                    <img style="width: 100%;height: 250px;object-fit: contain" src="{{asset('storage/productos/'.$producto->image)}}">
                     <span>{{$producto->description}}</span>
                     <span style="text-align: center;display: inherit;font-size: 22px;font-weight: bold"><i
                             class="fa-solid fa-tag">{{$producto->price}}€</i></span>
