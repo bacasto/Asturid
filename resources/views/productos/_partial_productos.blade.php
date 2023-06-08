@@ -12,11 +12,12 @@
                     <span style="text-align: center;display: inherit;font-size: 22px;font-weight: bold"><i
                             class="fa-solid fa-tag">{{$producto->price}}€</i></span>
                 </div>
+                
                 <div class="card-footer" style="text-align: center">
                     <button type="button" class="btn btn-primary"><i class="fa-solid fa-cart-shopping"></i> Añadir
                         al carrito
                     </button>
-                    <a href="{{route('show.product',$producto->id)}}" class="btn btn-success">Ver más</a>
+                    <a href="{{route('show.product',$producto->id)}}" class="btn btn-success">Ver más</a> 
                 </div>
             </div>
         </div>
