@@ -12,7 +12,9 @@
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
-        "laraveles/spanish": "^1.5"
+        "laraveles/spanish": "^1.5",
+        "league/omnipay": "^3.2",
+        "omnipay/paypal": "^3.0"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
@@ -57,7 +59,10 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true

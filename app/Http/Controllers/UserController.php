@@ -6,11 +6,18 @@ use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
+    public function showProfile()
+    {
+        return view('profile.edit_profile');
+    }
+
     public function store(Request $request)
     {
         if (Auth::user()->rol_id == 2) {
@@ -18,78 +25,98 @@ class UserController extends Controller
                 'name' => 'required|max:250',
                 'address' => 'required|string',
                 'phone' => 'required|numeric',
-                'rol_id' => 'required|exists:roles,id',
+                'rol' => 'required|exists:roles,id',
                 'email' => 'required|email',
+                'password' => 'required|min:6',
                 'zip' => 'required|numeric',
             ]);
 
             User::create([
                 'name' => $request->name,
-                'rol_id' => $request->rol_id,
+                'rol_id' => $request->rol,
                 'phone' => $request->phone,
                 'address' => $request->address,
+                'password' => Hash::make($request->password),
                 'zip' => $request->zip,
                 'email' => $request->email,
             ]);
-            $usuarios = User::all();
-            $html = view('admin._partial_users_admin', compact('usuarios'))->render();
+            $users = User::all();
+            $html = view('admin._partial_users_admin', compact('users'))->render();
             return response()->json(['status' => 'ok', 'message' => "Usuario creado correctamente", 'view' => $html], 200);
         } else {
             return response()->json(['status' => 'error'], 403);
         }
     }
 
-    public function updateProduct(Request $request)
+    public function update(Request $request)
     {
+
         if (Auth::user()->rol_id == 2) {
             $request->validate([
+                'user_id' => 'required|exists:users,id',
                 'name' => 'required|max:250',
-                'description' => 'required|string',
-                'stock' => 'required|numeric',
-                'category' => 'required|exists:categories,id',
-                'show' => 'required',
-                'price' => 'required|numeric',
-                'image' => 'nullable',
+                'address' => 'required|string',
+                'phone' => 'required|numeric',
+                'rol' => 'required|exists:roles,id',
+                'email' => 'required|email',
+                'zip' => 'required|numeric',
+                'password' => 'nullable|min:6',
             ]);
-
-            if ($request->file('image')) {
-                $image = $request->file('image');
-                $nameFile = Str::random(10) . '.' . $image->getClientOriginalExtension();
-                $path = $image->storeAs('public/productos', $nameFile);
+            $user = User::find($request->user_id);
+            if ($request->password) {
+                $user->password = Hash::make($request->password);
             }
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->rol_id = $request->rol;
+            $user->phone = $request->phone;
+            $user->address = $request->address;
+            $user->zip = $request->zip;
+            $user->save();
 
-            $product = Product::find($request->product_id);
-            $product->name = $request->name;
-            $product->category_id = $request->category;
-            $product->description = $request->description;
-            $product->stock = $request->stock;
-            if($request->file('image')){
-                $product->image = $nameFile;
-            }
-            $product->price = $request->price;
-            $product->showProduct = $request->show == "true" ? 1 : 0;
-            $product->save();
-            $productos = Product::all();
-            $html = view('admin._partial_products_admin', compact('productos'))->render();
-            return response()->json(['status' => 'ok', 'message' => "Producto actualizado correctamente", 'view' => $html], 200);
+            $users = User::all();
+            $html = view('admin._partial_users_admin', compact('users'))->render();
+            return response()->json(['status' => 'ok', 'message' => "Usuario actualizado correctamente", 'view' => $html], 200);
         } else {
             return response()->json(['status' => 'error'], 403);
         }
     }
 
+    public function updateProfile(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|max:250',
+            'address' => 'required|string',
+            'phone' => 'required|numeric',
+            'email' => 'required|email|'.Rule::unique('users')->ignore(Auth::id()),
+            'zip' => 'required|numeric',
+            'password' => 'nullable|min:6|confirmed',
+        ]);
+        if ($request->password) {
+            Auth::user()->password = Hash::make($request->password);
+        }
+        Auth::user()->name = $request->name;
+        Auth::user()->email = $request->email;
+        Auth::user()->phone = $request->phone;
+        Auth::user()->address = $request->address;
+        Auth::user()->zip = $request->zip;
+        Auth::user()->save();
+        return response()->json(['status'=>'ok']);
+
+
+    }
+
     public function destroy($id)
     {
         if (Auth::user()->rol_id == 2) {
-            $product = Product::find($id);
-            if ($product) {
-                if (Storage::exists('public/productos/' . $product->image)) {
-                    Storage::delete('public/productos/' . $product->image);
-                }
-                $product->delete();
+            $user = User::find($id);
+            if ($user) {
+
+                $user->delete();
             }
-            $productos = Product::all();
-            $html = view('admin._partial_products_admin', compact('productos'))->render();
-            return response()->json(['status' => 'ok', 'message' => "Producto eliminado correctamente", 'view' => $html], 200);
+            $users = User::all();
+            $html = view('admin._partial_users_admin', compact('users'))->render();
+            return response()->json(['status' => 'ok', 'message' => "Usuario eliminado correctamente", 'view' => $html], 200);
 
         } else {
             return response()->json(['status' => 'ok', 'message' => "No tienes permiso para hacer esto"], 403);

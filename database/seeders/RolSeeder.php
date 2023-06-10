@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\Rol;
+use Illuminate\Database\Seeder;
+
 class RolSeeder extends Seeder
 {
     /**
@@ -13,12 +14,10 @@ class RolSeeder extends Seeder
      */
     public function run()
     {
-
         $roles = ["usuario", "administrador"];
-        
-        foreach($roles as $rol){
+        foreach ($roles as $rol) {
             Rol::create([
-                'name'=>$rol,
+                'name' => $rol,
             ]);
         }
     }

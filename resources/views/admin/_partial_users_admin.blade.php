@@ -1,4 +1,3 @@
-
 <div class="table-responsive">
     <table class="table">
         <thead>
@@ -73,18 +72,14 @@
     })
 
     $('.btn_edit_user').click((e) => {
-        let category_id = e.currentTarget.dataset.cat_id_product;;
-        $('input[name="product_id"]').val(e.currentTarget.dataset.product_id)
-        $('input[name="name_edit"]').val(e.currentTarget.dataset.name_product)
-        $('textarea[name="description_edit"]').val(e.currentTarget.dataset.desc_product)
-        $('input[name="stock_edit"]').val(e.currentTarget.dataset.stock_product)
-        $('select[name="category_edit"]').val(category_id);
-        $('input[name="price_edit"]').val(e.currentTarget.dataset.price_product)
-        if (e.currentTarget.dataset.show_product == 1) {
-            $('input[name="show_edit"]').prop('checked', true)
-        } else {
-            $('input[name="show_edit"]').prop('checked', false)
-        }
+       console.log('editt')
+        $('input[name="user_id"]').val(e.currentTarget.dataset.user_id)
+        $('input[name="name_edit"]').val(e.currentTarget.dataset.name_user)
+        $('select[name="rol"]').val(e.currentTarget.dataset.rol_user)
+        $('input[name="email_edit"]').val(e.currentTarget.dataset.email_user)
+        $('input[name="phone_edit"]').val(e.currentTarget.dataset.phone_user);
+        $('input[name="address_edit"]').val(e.currentTarget.dataset.address_user)
+        $('input[name="zip_edit"]').val(e.currentTarget.dataset.zip_user)
 
     })
 </script>

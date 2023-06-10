@@ -15,30 +15,33 @@ class CreateMenusTable extends Migration
     {
         Schema::create('menus', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('entrante');
-            $table->unsignedBigInteger('primerplato');
-            $table->unsignedBigInteger('segundoplato');
-            $table->unsignedBigInteger('postre');
-            $table->unsignedBigInteger('bebida');
+            $table->string('name',250);
+            $table->unsignedBigInteger('entrante_id');
+            $table->string('image',250);
+            $table->unsignedBigInteger('primerplato_id');
+            $table->unsignedBigInteger('segundoplato_id');
+            $table->unsignedBigInteger('postre_id');
+            $table->unsignedBigInteger('bebida_id');
+            $table->decimal('price',10,2);
             $table->timestamps();
             $table->engine = "innoDB";
-            $table->foreign('entrante')
+            $table->foreign('entrante_id')
                 ->on('products')
                 ->references('id')
                 ->onDelete('cascade');
-            $table->foreign('primerplato')
+            $table->foreign('primerplato_id')
                 ->on('products')
                 ->references('id')
                 ->onDelete('cascade');
-            $table->foreign('segundoplato')
+            $table->foreign('segundoplato_id')
                 ->on('products')
                 ->references('id')
                 ->onDelete('cascade');
-            $table->foreign('postre')
+            $table->foreign('postre_id')
                 ->on('products')
                 ->references('id')
                 ->onDelete('cascade');
-            $table->foreign('bebida')
+            $table->foreign('bebida_id')
                 ->on('products')
                 ->references('id')
                 ->onDelete('cascade');

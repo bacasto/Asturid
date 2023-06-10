@@ -46,37 +46,39 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="" method="post" enctype="multipart/form-data" id="addProductsForm">
+                    <form action="" method="post" enctype="multipart/form-data" id="addUsersForm">
                         <div class="form-group">
                             <label>Nombre</label>
                             <input class="form-control" type="text" max="250" name="name" required>
                             <div id="errorName"></div>
                         </div>
                         <div class="form-group">
-                            <label>Descripción</label>
-                            <textarea class="form-control" name="description" required></textarea>
-                            <div id="errorDesc"></div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Stock</label>
-                            <input  class="form-control" type="number" min="0" name="stock" value="0" required>
-                            <div id="errorStock"></div>
+                            <label>Rol</label>
+                            <select name="rol" class="form-control">
+                                @foreach(\App\Models\Rol::all() as $rol)
+                                    <option value="{{$rol->id}}">{{$rol->name}}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="form-group">
-                            <label>Precio</label>
-                            <input  class="form-control" type="number" step="0.01" name="price" min="0" value="0" required>
-                            <div id="errorStock"></div>
+                            <label>Email</label>
+                            <input class="form-control" type="text"  name="email" required>
                         </div>
                         <div class="form-group">
-                            <label>Imagen</label>
-                            <input class="form-control" type="file" accept="image/*" name="image" required>
-                            <div id="errorImage"></div>
+                            <label>Contraseña</label>
+                            <input  class="form-control" type="password" min="6" name="password" required>
                         </div>
                         <div class="form-group">
-                            <input type="checkbox" id="checkShow" checked name="show" required>
-                            <label for="checkShow" >Mostrar en la pagina</label>
-                            <div id="errorShow"></div>
+                            <label>Teléfono</label>
+                            <input class="form-control" type="text"  name="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Dirección</label>
+                            <input  class="form-control" type="text" name="address" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Código postal</label>
+                            <input class="form-control" type="text"  name="zip" required>
                         </div>
                     </form>
                 </div>
@@ -91,48 +93,51 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Modificar producto</h1>
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Modificar usuario</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="" method="post" enctype="multipart/form-data" id="updateProductsForm">
-                        <input class="form-control" type="hidden" name="product_id" required>
+                    <form action="" method="post" enctype="multipart/form-data" id="updateUsersForm">
+                        <input class="form-control" type="hidden" name="user_id" required>
                         <div class="form-group">
                             <label>Nombre</label>
                             <input class="form-control" type="text" max="250" name="name_edit" required>
-                            <div id="errorNameEdit"></div>
+                            <div id="errorName"></div>
                         </div>
                         <div class="form-group">
-                            <label>Descripción</label>
-                            <textarea class="form-control" name="description_edit" required></textarea>
-                            <div id="errorDescEdit"></div>
+                            <label>Rol</label>
+                            <select name="rol_edit" class="form-control">
+                                @foreach(\App\Models\Rol::all() as $rol)
+                                    <option value="{{$rol->id}}">{{$rol->name}}</option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class="form-group">
-                            <label>Stock</label>
-                            <input  class="form-control" type="number" min="0" name="stock_edit" value="0" required>
-
+                            <label>Teléfono</label>
+                            <input class="form-control" type="text"  name="phone_edit" required>
                         </div>
                         <div class="form-group">
-                            <label>Precio</label>
-                            <input  class="form-control" type="number" step="0.01" name="price_edit" min="0" value="0" required>
-                            <div id="errorPrecioEdit"></div>
+                            <label>Email</label>
+                            <input class="form-control" type="text"  name="email_edit" required>
                         </div>
                         <div class="form-group">
-                            <label>Imagen</label>
-                            <input class="form-control" type="file" accept="image/*" name="image_edit" required>
-                            <div id="errorImageEdit"></div>
+                            <label>Contraseña (Dejar en blanco para mentener)</label>
+                            <input  class="form-control" type="password" min="6" name="password_edit" required>
                         </div>
                         <div class="form-group">
-                            <input type="checkbox" id="checkShowEdit" checked name="show_edit" required>
-                            <label for="checkShowEdit" >Mostrar en la pagina</label>
-                            <div id="errorShowEdit"></div>
+                            <label>Dirección</label>
+                            <input  class="form-control" type="text" name="address_edit" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Código postal</label>
+                            <input class="form-control" type="text"  name="zip_edit" required>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary" id="btnUpdateProduct" data-bs-dismiss="modal">Añadir</button>
+                    <button type="button" class="btn btn-primary" id="btnUpdateUser" data-bs-dismiss="modal">Actualizar</button>
                 </div>
             </div>
         </div>
@@ -140,17 +145,16 @@
 
     <script>
         $('#btnAddUser').click(()=>{
-            //TODO=>Terminar validaciones
-
             let form_data = new FormData();
             form_data.append('_token','{{csrf_token()}}')
             form_data.append('name',$('input[name="name"]').val())
-            form_data.append('description',$('textarea[name="description"]').val())
-            form_data.append('stock',$('input[name="stock"]').val())
-            form_data.append('category',$('select[name="category"]').val())
-            form_data.append('price',$('input[name="price"]').val())
-            form_data.append('image',image)
-            form_data.append('show',$('input[name="show"]').prop('checked'))
+            form_data.append('rol',$('select[name="rol"]').val())
+            form_data.append('email',$('input[name="email"]').val())
+            form_data.append('password',$('input[name="password"]').val())
+            form_data.append('phone',$('input[name="phone"]').val())
+            form_data.append('address',$('input[name="address"]').val())
+            form_data.append('zip',$('input[name="zip"]').val())
+
 
             $.ajax({
                 type:"post",
@@ -161,7 +165,7 @@
                 data: form_data,
                 success: function (response){
                     toastr.success(response.message)
-                    document.getElementById('addProductsForm').reset();
+                    document.getElementById('addUsersForm').reset();
                     $('#content_users').html(response.view)
                 },
                 error: function(error){
@@ -172,27 +176,19 @@
             })
         })
 
-        $('#btnUpdateProduct').click(()=>{
+        $('#btnUpdateUser').click(()=>{
             //TODO=>Terminar validaciones
-
-            let image = $('input[name="image_edit"]').prop('files')[0];
-
             let form_data = new FormData();
-            if(image == undefined){
-                form_data.append('image',null)
-            }else{
-                form_data.append('image',image)
-            }
 
             form_data.append('_token','{{csrf_token()}}')
-            form_data.append('product_id',$('input[name="product_id"]').val())
+            form_data.append('user_id',$('input[name="user_id"]').val())
             form_data.append('name',$('input[name="name_edit"]').val())
-            form_data.append('description',$('textarea[name="description_edit"]').val())
-            form_data.append('stock',$('input[name="stock_edit"]').val())
-            form_data.append('category',$('select[name="category_edit"]').val())
-            form_data.append('price',$('input[name="price_edit"]').val())
-
-            form_data.append('show',$('input[name="show_edit"]').prop('checked'))
+            form_data.append('rol',$('select[name="rol_edit"]').val())
+            form_data.append('email',$('input[name="email_edit"]').val())
+            form_data.append('password',$('input[name="password_edit"]').val())
+            form_data.append('phone',$('input[name="phone_edit"]').val())
+            form_data.append('address',$('input[name="address_edit"]').val())
+            form_data.append('zip',$('input[name="zip_edit"]').val())
 
             $.ajax({
                 type:"post",
@@ -203,7 +199,7 @@
                 data: form_data,
                 success: function (response){
                     toastr.success(response.message)
-                    document.getElementById('updateProductsForm').reset();
+                    document.getElementById('updateUsersForm').reset();
                     $('#content_users').html(response.view)
                 },
                 error: function(error){

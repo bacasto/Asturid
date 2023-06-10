@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Menu;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -28,5 +29,10 @@ class adminController extends Controller
             return redirect()->back();
         }
 
+    }
+
+    public function showMenusAdmin(){
+        $menus = Menu::all();
+        return view('admin.menus_index',compact('menus'));
     }
 }
