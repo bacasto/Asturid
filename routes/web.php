@@ -32,6 +32,9 @@ Route::group(['middleware'=>'auth'],function(){
     Route::get('/productos','App\Http\Controllers\AdminController@showProductsAdmin')->name('show.products.admin');
     Route::get('/usuarios','App\Http\Controllers\AdminController@showUsersAdmin')->name('show.users.admin');
     Route::get('/menus_admin','App\Http\Controllers\AdminController@showMenusAdmin')->name('show.menus.admin');
+    Route::get('/extras','App\Http\Controllers\ExtrasController@showExtrasAdmin')->name('show.extras.admin');
+
+
 
     ##Products
     Route::post('/addproduct','App\Http\Controllers\ProductController@store')->name('add.producto');
@@ -48,6 +51,11 @@ Route::group(['middleware'=>'auth'],function(){
     Route::post('/updatemenu','App\Http\Controllers\MenuController@update')->name('update.menu');
     Route::get('/removemenu/{id}','App\Http\Controllers\MenuController@destroy')->name('destroy.menu');
 
+
+    #Extras
+    Route::post('/addextra','App\Http\Controllers\ExtrasController@store')->name('add.extra');
+    Route::post('/updateextra','App\Http\Controllers\ExtrasController@update')->name('update.extra');
+    Route::get('/removeextra/{id}','App\Http\Controllers\ExtrasController@destroy')->name('destroy.extra');
 
 
 });

@@ -22,20 +22,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12 mt-4 mb-4" style="text-align: center">
-                <h1>Productos ({{count($productos)}})</h1>
-
-                <span>{{ isset($category_name) ? $category_name : '' }}</span>
-            </div>
-
-            <div class="col-12">
-                <ul class="items_categories" style="display: flex">
-                    <li> <a href="{{route('show.product.category',0)}}">Todos</a> </li>
-                @foreach($categorias as $categoria)
-                        <li>
-                            <a href="{{route('show.product.category',$categoria->id)}}">{{$categoria->name}}</a>
-                        </li>
-                @endforeach
-                </ul>
+                <h1>Menus ({{count($menus)}})</h1>
             </div>
 
             <div class="col-md-12">
@@ -43,7 +30,7 @@
                     <div class="col-12 col-md-6" style="margin: auto">
                         <form style="text-align: center;" id="form_search">
                             @csrf
-                            <input type="search" minlength="3" maxlength="250" class="form-control" name="text_search" placeholder="Buscar por nombre o descripcion">
+                            <input type="search" minlength="3" maxlength="250" class="form-control" name="text_search" placeholder="Buscar por nombre">
                             <div id="error_text">
 
                             </div>
@@ -64,7 +51,7 @@
             </div>
 
             <div id="content_products">
-                @include('productos._partial_productos')
+                @include('menus._partial_menus')
             </div>
 
 
@@ -77,11 +64,6 @@
 @section('scripts')
     <script>
         const MIN_LENGHT_FILTER = 2;
-        @if(isset($category_id))
-            let category_id = '{{$category_id}}'
-        @else
-            let category_id = 0
-        @endif
         $('#btn_send_filter').click(()=>{
             if($('input[name="text_search"]').val().length<MIN_LENGHT_FILTER){
                 $('#error_text').html(`<p style="color: red;font-weight: bold">Debes introducir al menos ${MIN_LENGHT_FILTER} carácteres</p>`)

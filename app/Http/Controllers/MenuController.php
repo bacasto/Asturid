@@ -20,8 +20,10 @@ class MenuController extends Controller
         return view('menus.single',compact('menu'));
     }
     public function store(Request $request){
+        //dd($request->all());
         if (Auth::user()->rol_id == 2) {
             $request->validate([
+                'name'=> 'required|string',
                 'entrante' => 'required|exists:products,id',
                 'primerplato' => 'required|exists:products,id',
                 'segundoplato' => 'required|exists:products,id',
@@ -36,13 +38,21 @@ class MenuController extends Controller
                 $nameFile = Str::random(10) . '.' . $image->getClientOriginalExtension();
                 $path = $image->storeAs('public/menus', $nameFile);
             }
+            $priceTotal = 0;
+            $priceTotal += Product::find($request->entrante)->price;
+            $priceTotal += Product::find($request->primerplato)->price;
+            $priceTotal += Product::find($request->segundoplato)->price;
+            $priceTotal += Product::find($request->postre)->price;
+            $priceTotal += Product::find($request->bebida)->price;
             Menu::create([
-                'entrante' => $request->entrante,
-                'primerplato' => $request->primerplato,
-                'segundoplato' => $request->segundoplato,
-                'postre' => $request->postre,
+                'name'=>$request->name,
+                'entrante_id' => $request->entrante,
+                'primerplato_id' => $request->primerplato,
+                'segundoplato_id' => $request->segundoplato,
+                'postre_id' => $request->postre,
                 'image' => $nameFile,
-                'bebida' => $request->bebida,
+                'bebida_id' => $request->bebida,
+                'price' => $priceTotal,
             ]);
             $menus = Menu::all();
             $html = view('admin._partial_menus_admin', compact('menus'))->render();
@@ -52,8 +62,10 @@ class MenuController extends Controller
         }
     }
     public function update(Request $request){
+
         if (Auth::user()->rol_id == 2) {
             $request->validate([
+                'name'=>'required|string',
                 'entrante' => 'required|exists:products,id',
                 'primerplato' => 'required|exists:products,id',
                 'segundoplato' => 'required|exists:products,id',
@@ -67,16 +79,24 @@ class MenuController extends Controller
                 $nameFile = Str::random(10) . '.' . $image->getClientOriginalExtension();
                 $path = $image->storeAs('public/menus', $nameFile);
             }
+            $priceTotal = 0;
+            $priceTotal += Product::find($request->entrante)->price;
+            $priceTotal += Product::find($request->primerplato)->price;
+            $priceTotal += Product::find($request->segundoplato)->price;
+            $priceTotal += Product::find($request->postre)->price;
+            $priceTotal += Product::find($request->bebida)->price;
 
             $menu = Menu::find($request->menu_id);
-            $menu->entrante = $request->entrante;
-            $menu->primerplato = $request->primerplato;
-            $menu->segundoplato = $request->segundoplato;
-            $menu->postre = $request->postre;
+            $menu->name = $request->name;
+            $menu->entrante_id = $request->entrante;
+            $menu->primerplato_id = $request->primerplato;
+            $menu->segundoplato_id = $request->segundoplato;
+            $menu->postre_id = $request->postre;
             if($request->file('image')){
                 $menu->image = $nameFile;
             }
-            $menu->bebida = $request->bebida;
+            $menu->bebida_id = $request->bebida;
+            $menu->price = $priceTotal;
 
             $menu->save();
             $menus = Menu::all();
@@ -87,15 +107,16 @@ class MenuController extends Controller
         }
     }
     public function destroy($id){
+
         if (Auth::user()->rol_id == 2) {
-            $menu = Product::find($id);
+            $menu = Menu::find($id);
             if ($menu) {
                 if (Storage::exists('public/menus/' . $menu->image)) {
                     Storage::delete('public/menus/' . $menu->image);
                 }
                 $menu->delete();
             }
-            $menus = Product::all();
+            $menus = Menu::all();
             $html = view('admin._partial_menus_admin', compact('menus'))->render();
             return response()->json(['status' => 'ok', 'message' => "Menu eliminado correctamente", 'view' => $html], 200);
 

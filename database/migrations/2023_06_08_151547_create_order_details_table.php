@@ -15,9 +15,10 @@ class CreateOrderDetailsTable extends Migration
     {
         Schema::create('order_details', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('order_id');
-            $table->unsignedInteger('product_id')->nullable(true);
-            $table->unsignedInteger('menu_id')->nullable(true);
+            $table->unsignedBigInteger('order_id');
+            $table->unsignedBigInteger('product_id')->nullable(true);
+            $table->unsignedBigInteger('menu_id')->nullable(true);
+            $table->json('extras')->nullable(true);
             $table->timestamps();
             $table->engine = "innoDB";
             $table->foreign('order_id')

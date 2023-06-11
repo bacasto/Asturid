@@ -14,10 +14,10 @@
            <div class="d-flex" style="margin-left: auto;padding-right: 20px;">
                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                    <li class="nav-item">
-                       <a class="nav-link active" aria-current="page" href="{{ route('dashboard') }}">Principal</a>
+                       <a class="nav-link active" aria-current="page" href="{{ route('dashboard') }}">Productos</a>
                    </li>
                    <li class="nav-item">
-                       <a class="nav-link" href="#">Link</a>
+                       <a class="nav-link active" aria-current="page" href="{{route('show.menus')}}">Menus</a>
                    </li>
                    @auth
                        <li class="nav-item dropdown">
@@ -25,10 +25,12 @@
                                {{ \Illuminate\Support\Facades\Auth::user()->name }}
                            </a>
                            <ul class="dropdown-menu">
-                               <li><a class="dropdown-item" href="#">Mi perfil</a></li>
+                               <li><a class="dropdown-item" href="{{route('show.profile')}}">Mi perfil</a></li>
                                <li><a class="dropdown-item" href="#">Mis pedidos</a></li>
                                @if(\Illuminate\Support\Facades\Auth::user()->rol_id == 2)
+                                   <li><a class="dropdown-item" href="{{route('show.extras.admin')}}">Editar Extras</a></li>
                                    <li><a class="dropdown-item" href="{{route('show.products.admin')}}">Editar Productos</a></li>
+                                   <li><a class="dropdown-item" href="{{route('show.menus.admin')}}">Editar Menús</a></li>
                                    <li><a class="dropdown-item" href="{{route('show.users.admin')}}">Editar Usuarios</a></li>
                                    <li><a class="dropdown-item" href="#">Editar Pedidos</a></li>
                                @endif

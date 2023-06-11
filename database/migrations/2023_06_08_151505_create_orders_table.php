@@ -15,9 +15,9 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('user_id');
+            $table->unsignedBigInteger('user_id');
             $table->decimal('total',8,2);
-            $table->unsignedInteger('state_id');
+            $table->unsignedBigInteger('state_id');
             $table->timestamps();
             $table->engine = "innoDB";
             $table->foreign('user_id')

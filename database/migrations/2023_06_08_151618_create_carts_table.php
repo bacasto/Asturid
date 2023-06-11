@@ -15,9 +15,10 @@ class CreateCartsTable extends Migration
     {
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('user_id');
-            $table->unsignedInteger('product_id')->nullable(true);
-            $table->unsignedInteger('menu_id')->nullable(true);
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('product_id')->nullable(true);
+            $table->unsignedBigInteger('menu_id')->nullable(true);
+            $table->json('extras')->nullable(true);
             $table->timestamps();
             $table->engine = "innoDB";
             $table->foreign('user_id')

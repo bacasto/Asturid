@@ -15,9 +15,14 @@ class CreateExtrasTable extends Migration
     {
         Schema::create('extras', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('category_id');
             $table->string('name',250);
             $table->engine = "innoDB";
             $table->timestamps();
+            $table->foreign('category_id')
+                ->on('categories')
+                ->references('id')
+                ->onDelete('cascade');
         });
     }
 
