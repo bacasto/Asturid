@@ -19,6 +19,9 @@
                    <li class="nav-item">
                        <a class="nav-link active" aria-current="page" href="{{route('show.menus')}}">Menus</a>
                    </li>
+                   <li class="nav-item">
+                       <a class="nav-link active" aria-current="page" href="{{route('show.cart')}}">Carrito <span class="badge badge-danger" id="countCartElements" style="background-color: red;">{{\App\CartHelper::cartCount()}}</span></a>
+                   </li>
                    @auth
                        <li class="nav-item dropdown">
                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

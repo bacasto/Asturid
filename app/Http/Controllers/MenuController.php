@@ -11,19 +11,52 @@ use Illuminate\Support\Str;
 
 class MenuController extends Controller
 {
-    public function showMenus(){
+    public function showMenus()
+    {
         $menus = Menu::all();
-        return view('menus.index',compact('menus'));
+        return view('menus.index', compact('menus'));
     }
-    public function showMenu($id){
+
+    public function showMenu($id)
+    {
         $menu = Menu::find($id);
-        return view('menus.single',compact('menu'));
+        return view('menus.single', compact('menu'));
     }
-    public function store(Request $request){
+
+    //TODO=>Crear ruta
+    public function searchMenus(Request $request)
+    {
+        $p_maximo = 0;
+        $p_minimo = 0;
+
+        if ($request->p_max == null) {
+            $p_maximo = 999;
+        } else {
+            $p_maximo = $request->p_max;
+        }
+        if ($request->p_min == null) {
+            $p_minimo = 0;
+        } else {
+            $p_minimo = $request->p_min;
+        }
+
+
+        $menus = Product::where('price', '>=', $p_minimo)
+            ->where('price', '<=', $p_maximo)
+            ->where(function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->text . '%');})->get();
+
+
+        $html = view('menus.menus', compact('menus'))->render();
+        return response()->json(['status' => 'ok', 'html' => $html]);
+    }
+
+    public function store(Request $request)
+    {
         //dd($request->all());
         if (Auth::user()->rol_id == 2) {
             $request->validate([
-                'name'=> 'required|string',
+                'name' => 'required|string',
                 'entrante' => 'required|exists:products,id',
                 'primerplato' => 'required|exists:products,id',
                 'segundoplato' => 'required|exists:products,id',
@@ -45,7 +78,7 @@ class MenuController extends Controller
             $priceTotal += Product::find($request->postre)->price;
             $priceTotal += Product::find($request->bebida)->price;
             Menu::create([
-                'name'=>$request->name,
+                'name' => $request->name,
                 'entrante_id' => $request->entrante,
                 'primerplato_id' => $request->primerplato,
                 'segundoplato_id' => $request->segundoplato,
@@ -61,11 +94,13 @@ class MenuController extends Controller
             return response()->json(['status' => 'error'], 403);
         }
     }
-    public function update(Request $request){
+
+    public function update(Request $request)
+    {
 
         if (Auth::user()->rol_id == 2) {
             $request->validate([
-                'name'=>'required|string',
+                'name' => 'required|string',
                 'entrante' => 'required|exists:products,id',
                 'primerplato' => 'required|exists:products,id',
                 'segundoplato' => 'required|exists:products,id',
@@ -92,7 +127,7 @@ class MenuController extends Controller
             $menu->primerplato_id = $request->primerplato;
             $menu->segundoplato_id = $request->segundoplato;
             $menu->postre_id = $request->postre;
-            if($request->file('image')){
+            if ($request->file('image')) {
                 $menu->image = $nameFile;
             }
             $menu->bebida_id = $request->bebida;
@@ -106,7 +141,9 @@ class MenuController extends Controller
             return response()->json(['status' => 'error'], 403);
         }
     }
-    public function destroy($id){
+
+    public function destroy($id)
+    {
 
         if (Auth::user()->rol_id == 2) {
             $menu = Menu::find($id);

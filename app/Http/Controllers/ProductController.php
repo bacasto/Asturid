@@ -49,8 +49,6 @@ class ProductController extends Controller
         return view('productos.index', compact('productos', 'categorias', 'category_name', 'category_id'));
     }
 
-
-
     public function searchProducts(Request $request)
     {
         $p_maximo = 0;

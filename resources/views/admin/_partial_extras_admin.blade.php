@@ -4,6 +4,7 @@
         <tr>
             <th scope="col">ID</th>
             <th scope="col">Nombre</th>
+            <th scope="col">Categoría</th>
             <th scope="col">Acciones</th>
         </tr>
         </thead>
@@ -12,6 +13,7 @@
             <tr>
                 <td>{{$extra->id}}</td>
                 <td>{{$extra->name}}</td>
+                <td>{{$extra->category->name}}</td>
                 <td>
                     <button class="btn btn-success btn_edit_extra" data-bs-toggle="modal"
                             data-bs-target="#modalupdateextra"
@@ -56,9 +58,9 @@
 
     })
 
-    $('.btn_edit_menu').click((e) => {
+    $('.btn_edit_extra').click((e) => {
         $('input[name="extra_id"]').val(e.currentTarget.dataset.extra_id)
-        $('input[name="name_edit"]').val(e.currentTarget.dataset.name_extra)
-        $('input[name="category_edit"]').val(e.currentTarget.dataset.extra_category)
+        $('input[name="name_edit"]').val(e.currentTarget.dataset.extra_name)
+        $('select[name="category_edit"]').val(e.currentTarget.dataset.extra_category)
     })
 </script>

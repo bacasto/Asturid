@@ -27,14 +27,11 @@ Route::group(['middleware'=>'auth'],function(){
     Route::get('/mi-perfil','App\Http\Controllers\UserController@showProfile')->name('show.profile');
     Route::Post('/update-profile','App\Http\Controllers\UserController@updateProfile')->name('update.profile');
 
-
     ## Index Admin
     Route::get('/productos','App\Http\Controllers\AdminController@showProductsAdmin')->name('show.products.admin');
     Route::get('/usuarios','App\Http\Controllers\AdminController@showUsersAdmin')->name('show.users.admin');
     Route::get('/menus_admin','App\Http\Controllers\AdminController@showMenusAdmin')->name('show.menus.admin');
     Route::get('/extras','App\Http\Controllers\ExtrasController@showExtrasAdmin')->name('show.extras.admin');
-
-
 
     ##Products
     Route::post('/addproduct','App\Http\Controllers\ProductController@store')->name('add.producto');
@@ -51,15 +48,17 @@ Route::group(['middleware'=>'auth'],function(){
     Route::post('/updatemenu','App\Http\Controllers\MenuController@update')->name('update.menu');
     Route::get('/removemenu/{id}','App\Http\Controllers\MenuController@destroy')->name('destroy.menu');
 
-
     #Extras
     Route::post('/addextra','App\Http\Controllers\ExtrasController@store')->name('add.extra');
     Route::post('/updateextra','App\Http\Controllers\ExtrasController@update')->name('update.extra');
     Route::get('/removeextra/{id}','App\Http\Controllers\ExtrasController@destroy')->name('destroy.extra');
 
+    #Cart
+    Route::post('/addcart','App\Http\Controllers\CartController@add')->name('add.cart');
+    Route::get('/carrito','App\Http\Controllers\CartController@show')->name('show.cart');
+    Route::get('/destroyCartElement/{id}','App\Http\Controllers\CartController@destroy')->name('destroy.cart');
+
 
 });
-
-
 
 require __DIR__.'/auth.php';

@@ -72,7 +72,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modalupdatemenu" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="modalupdateextra" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -85,16 +85,16 @@
                         <div class="form-group">
                             <label>Nombre</label>
                             <input class="form-control" type="text" max="250" name="name_edit" required>
-                            <div id="errorName"></div>
+
                         </div>
                         <div class="form-group">
-                            <label>Nombre</label>
-                            <select name="category_edit" class="form_control">
+                            <label>Categoría</label>
+                            <select name="category_edit" class="form-control">
                                 @foreach(\App\Models\Category::all() as $category)
                                     <option value="{{$category->id}}">{{$category->name}}</option>
                                 @endforeach
                             </select>
-                            <div id="errorName"></div>
+
                         </div>
 
                     </form>
@@ -109,7 +109,6 @@
 
     <script>
         $('#btnAddExtra').click(()=>{
-
             let form_data = new FormData();
             form_data.append('_token','{{csrf_token()}}')
             form_data.append('name',$('input[name="name"]').val())
@@ -135,14 +134,13 @@
             })
         })
 
-        $('#btnUpdateMenu').click(()=>{
-            //TODO=>Terminar validaciones
+        $('#btnUpdateExtra').click(()=>{
             let form_data = new FormData();
-
             form_data.append('_token','{{csrf_token()}}')
-            form_data.append('extra_id',$('input[name="user_id"]').val())
+            form_data.append('extra_id',$('input[name="extra_id"]').val())
             form_data.append('name',$('input[name="name_edit"]').val())
             form_data.append('category',$('select[name="category_edit"]').val())
+            form_data.append('isMenu',0)
             $.ajax({
                 type:"post",
                 url: "{{route('update.extra')}}",

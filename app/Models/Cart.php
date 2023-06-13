@@ -9,7 +9,7 @@ class Cart extends Model
 {
     use HasFactory;
     protected $table = "carts";
-    protected $fillable = ['user_id','product_id','menu_id'];
+    protected $fillable = ['user_id','product_id','menu_id','extras'];
     public function user(){
         return $this->belongsTo(User::class,'user_id','id');
     }
