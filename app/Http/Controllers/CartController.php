@@ -18,6 +18,13 @@ class CartController extends Controller
     public function add(Request $request)
     {
         $product_id = $request->product_id;
+        if($request->isMenu==0){
+            $product = Product::find($request->product_id);
+            if($product->stock == 0){
+                return response()->json(['status'=>'error','message'=>'No hay stock.'],404);
+            }
+        }
+
         $extras = explode(",", $request->extras);
         $extras_json = null;
         $numExtras = count($extras);

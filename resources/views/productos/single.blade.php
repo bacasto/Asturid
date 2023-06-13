@@ -46,11 +46,11 @@
             })
             let formData = new FormData();
             formData.append('_token','{{csrf_token()}}')
+            formData.append('isMenu',0);
             if(extras!=undefined && extras.length>0 && extras!=null){
                 formData.append('extras',extras);
             }
             formData.append('product_id',e.currentTarget.dataset.product_id);
-            console.log(extras)
             $.ajax({
                 type:"post",
                 url: "{{route('add.cart')}}",
@@ -60,12 +60,14 @@
                 data: formData,
                 success: function (response){
                     toastr.success(response.message)
-                    console.log(response)
                     $('#countCartElements').text(response.cartCount);
                 },
                 error: function(error){
                     if(error.status==422){
                         toastr.warning('Los datos introducidos no son válidos')
+                    }
+                    if(error.status==404){
+                        toastr.warning(error.responseJSON.message)
                     }
                 }
             })

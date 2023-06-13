@@ -76,11 +76,10 @@
             form_data.append('text',$('input[name="text_search"]').val())
             form_data.append('p_min',$('input[name="min_price"]').val())
             form_data.append('p_max',$('input[name="max_price"]').val())
-            form_data.append('category_id',category_id)
 
             $.ajax({
                 type:"post",
-                url: "{{route('search.products')}}",
+                url: "{{route('search.menus')}}",
                 contentType: false,
                 processData: false,
                 dataType:'json',
@@ -89,7 +88,7 @@
                     $('#content_products').html(response.html)
                 },
                 error: function(error){
-                    console.log("Error: "+error)
+
                 }
             })
         })

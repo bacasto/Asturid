@@ -18,6 +18,7 @@ class CreateOrdersTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->decimal('total',8,2);
             $table->unsignedBigInteger('state_id');
+            $table->string('transaction',250);
             $table->timestamps();
             $table->engine = "innoDB";
             $table->foreign('user_id')

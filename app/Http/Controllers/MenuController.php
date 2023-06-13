@@ -28,9 +28,8 @@ class MenuController extends Controller
     {
         $p_maximo = 0;
         $p_minimo = 0;
-
         if ($request->p_max == null) {
-            $p_maximo = 999;
+            $p_maximo = 999999;
         } else {
             $p_maximo = $request->p_max;
         }
@@ -39,15 +38,11 @@ class MenuController extends Controller
         } else {
             $p_minimo = $request->p_min;
         }
-
-
-        $menus = Product::where('price', '>=', $p_minimo)
+        $menus = Menu::where('name','like','%'.$request->text.'%')
+            ->where('price', '>=', $p_minimo)
             ->where('price', '<=', $p_maximo)
-            ->where(function ($q) use ($request) {
-                $q->where('name', 'like', '%' . $request->text . '%');})->get();
-
-
-        $html = view('menus.menus', compact('menus'))->render();
+            ->get();
+        $html = view('menus._partial_menus', compact('menus'))->render();
         return response()->json(['status' => 'ok', 'html' => $html]);
     }
 

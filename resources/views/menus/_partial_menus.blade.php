@@ -13,9 +13,6 @@
                             class="fa-solid fa-tag">{{$menu->price}}€</i></span>
                 </div>
                 <div class="card-footer" style="text-align: center">
-                    <button type="button" class="btn btn-primary"><i class="fa-solid fa-cart-shopping"></i> Añadir
-                        al carrito
-                    </button>
                     <a href="{{route('show.menu',$menu->id)}}" class="btn btn-success">Ver más</a>
                 </div>
             </div>

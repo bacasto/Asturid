@@ -13,13 +13,17 @@ use App\Http\Controllers\IndexController;
 |
 */
 
-Route::get('/','App\Http\Controllers\ProductController@index')->name('dashboard');
-Route::get('/producto/{id}','App\Http\Controllers\ProductController@showProduct')->name('show.product');
+Route::group(['middleware'=>'only.users'],function(){
+    Route::get('/','App\Http\Controllers\ProductController@index')->name('dashboard');
+    Route::get('/producto/{id}','App\Http\Controllers\ProductController@showProduct')->name('show.product');
 
-Route::get('/producto/categoria/{id}','App\Http\Controllers\ProductController@showProductCategory')->name('show.product.category');
-Route::post('products_search','App\Http\Controllers\ProductController@searchProducts')->name('search.products');
-Route::get('/menus','App\Http\Controllers\MenuController@showMenus')->name('show.menus');
-Route::get('/menu/{id}','App\Http\Controllers\MenuController@showMenu')->name('show.menu');
+    Route::get('/producto/categoria/{id}','App\Http\Controllers\ProductController@showProductCategory')->name('show.product.category');
+    Route::post('products_search','App\Http\Controllers\ProductController@searchProducts')->name('search.products');
+    Route::post('menus_search','App\Http\Controllers\MenuController@searchMenus')->name('search.menus');
+    Route::get('/menus','App\Http\Controllers\MenuController@showMenus')->name('show.menus');
+    Route::get('/menu/{id}','App\Http\Controllers\MenuController@showMenu')->name('show.menu');
+
+});
 
 
 Route::group(['middleware'=>'auth'],function(){
@@ -58,7 +62,19 @@ Route::group(['middleware'=>'auth'],function(){
     Route::get('/carrito','App\Http\Controllers\CartController@show')->name('show.cart');
     Route::get('/destroyCartElement/{id}','App\Http\Controllers\CartController@destroy')->name('destroy.cart');
 
+    #Order
+    Route::get('/pedidos-admin','App\Http\Controllers\AdminController@showOrdersAdmin')->name('show.orders.admin');
+    Route::get('/pedidos','App\Http\Controllers\OrderController@show')->name('show.orders');
+    Route::post('/updateorder','App\Http\Controllers\OrderController@update')->name('update.order');
+    Route::get('/removeorder/{id}','App\Http\Controllers\OrderController@destroy')->name('destroy.order');
+
+    #Pay
+    Route::post('charge','App\Http\Controllers\PaymentController@charge')->name('charge');
+    Route::get('success', 'App\Http\Controllers\PaymentController@success');
+    Route::get('error', 'App\Http\Controllers\PaymentController@error');
 
 });
+
+
 
 require __DIR__.'/auth.php';

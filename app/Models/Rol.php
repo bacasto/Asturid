@@ -11,4 +11,3 @@ class Rol extends Model
     protected $fillable = ['name'];
     use HasFactory;
 }
-

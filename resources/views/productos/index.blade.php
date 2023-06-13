@@ -2,19 +2,21 @@
 
 @section('content')
     <style>
-        .items_categories li{
-            margin:15px;
+        .items_categories div {
+            margin: 15px;
             list-style: none;
             padding: 5px;
             background-color: bisque;
             border-radius: 5px;
         }
-        .items_categories li:hover{
+
+        .items_categories div:hover {
             background-color: #f6a03e;
         }
-        .items_categories li a{
+
+        .items_categories div a {
             text-decoration-line: none;
-            color:black;
+            color: black;
         }
 
     </style>
@@ -28,14 +30,18 @@
             </div>
 
             <div class="col-12">
-                <ul class="items_categories" style="display: flex">
-                    <li> <a href="{{route('show.product.category',0)}}">Todos</a> </li>
-                @foreach($categorias as $categoria)
-                        <li>
-                            <a href="{{route('show.product.category',$categoria->id)}}">{{$categoria->name}}</a>
-                        </li>
-                @endforeach
-                </ul>
+                <div class="row items_categories" style="margin: auto">
+                    <div class="col-4 col-md-1" style="text-align: center"><a style="height: auto;
+display: inline-block;
+width: 100%;" href="{{route('show.product.category',0)}}">Todos</a></div>
+                    @foreach($categorias as $categoria)
+                        <div class="col-4 col-md-1" style="text-align: center">
+                            <a style="height: auto;
+display: inline-block;
+width: 100%;" href="{{route('show.product.category',$categoria->id)}}">{{$categoria->name}}</a>
+                        </div>
+                    @endforeach
+                </div>
             </div>
 
             <div class="col-md-12">
@@ -43,7 +49,8 @@
                     <div class="col-12 col-md-6" style="margin: auto">
                         <form style="text-align: center;" id="form_search">
                             @csrf
-                            <input type="search" minlength="3" maxlength="250" class="form-control" name="text_search" placeholder="Buscar por nombre o descripcion">
+                            <input type="search" minlength="3" maxlength="250" class="form-control" name="text_search"
+                                   placeholder="Buscar por nombre o descripcion">
                             <div id="error_text">
 
                             </div>
@@ -68,7 +75,6 @@
             </div>
 
 
-
         </div>
     </div>
 
@@ -78,36 +84,36 @@
     <script>
         const MIN_LENGHT_FILTER = 2;
         @if(isset($category_id))
-            let category_id = '{{$category_id}}'
+        let category_id = '{{$category_id}}'
         @else
-            let category_id = 0
+        let category_id = 0
         @endif
-        $('#btn_send_filter').click(()=>{
-            if($('input[name="text_search"]').val().length<MIN_LENGHT_FILTER){
+        $('#btn_send_filter').click(() => {
+            if ($('input[name="text_search"]').val().length < MIN_LENGHT_FILTER) {
                 $('#error_text').html(`<p style="color: red;font-weight: bold">Debes introducir al menos ${MIN_LENGHT_FILTER} carácteres</p>`)
                 return;
-            }else{
+            } else {
                 $('#error_text').html('')
             }
             let form_data = new FormData();
-            form_data.append('_token','{{csrf_token()}}')
-            form_data.append('text',$('input[name="text_search"]').val())
-            form_data.append('p_min',$('input[name="min_price"]').val())
-            form_data.append('p_max',$('input[name="max_price"]').val())
-            form_data.append('category_id',category_id)
+            form_data.append('_token', '{{csrf_token()}}')
+            form_data.append('text', $('input[name="text_search"]').val())
+            form_data.append('p_min', $('input[name="min_price"]').val())
+            form_data.append('p_max', $('input[name="max_price"]').val())
+            form_data.append('category_id', category_id)
 
             $.ajax({
-                type:"post",
+                type: "post",
                 url: "{{route('search.products')}}",
                 contentType: false,
                 processData: false,
-                dataType:'json',
+                dataType: 'json',
                 data: form_data,
-                success: function (response){
+                success: function (response) {
                     $('#content_products').html(response.html)
                 },
-                error: function(error){
-                    console.log("Error: "+error)
+                error: function (error) {
+                    console.log("Error: " + error)
                 }
             })
         })

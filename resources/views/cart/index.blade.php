@@ -48,33 +48,67 @@
                                     <div class="p-5">
                                         <div class="d-flex justify-content-between align-items-center mb-5">
                                             <h1 class="fw-bold mb-0 text-black">Carrito</h1>
-                                            <h6 class="mb-0 text-muted"><span id="cartElements">{{count($cartElements)}}</span> elementos</h6>
+                                            <h6 class="mb-0 text-muted"><span
+                                                    id="cartElements">{{count($cartElements)}}</span> elementos</h6>
                                         </div>
 
                                         @foreach($cartElements as $element)
-                                        <hr class="my-4" id="line_element_{{$element->id}}">
-                                        <div class="row mb-4 d-flex justify-content-between align-items-center" id="cont_element_{{$element->id}}">
-                                            <div class="col-md-2 col-lg-2 col-xl-2">
-                                                <img
-                                                    src="{{asset('storage/productos/'.$element->product->image)}}"
-                                                    class="img-fluid rounded-3" alt="img-product">
-                                            </div>
-                                            <div class="col-md-5 col-lg-5 col-xl-5">
-                                                <h6 class="text-muted">{{$element->product->name}}</h6>
-                                                <h6 class="text-black mb-0">{{ \Illuminate\Support\Str::limit($element->product->description,40)}}</h6>
-                                            </div>
+                                            <hr class="my-4" id="line_element_{{$element->id}}">
+                                            <div class="row mb-4 d-flex justify-content-between align-items-center"
+                                                 id="cont_element_{{$element->id}}">
+                                                <div class="col-md-2 col-lg-2 col-xl-2">
+                                                    @if($element->product_id != null )
+                                                        <img
+                                                            src="{{asset('storage/productos/'.$element->product->image)}}"
+                                                            class="img-fluid rounded-3" alt="img-product">
+                                                    @else
+                                                        <img
+                                                            src="{{asset('storage/menus/'.$element->menu->image)}}"
+                                                            class="img-fluid rounded-3" alt="img-menu">
+                                                    @endif
+                                                </div>
+                                                <div class="col-md-3 col-lg-3 col-xl-3">
+                                                    @if($element->product_id != null )
+                                                        <h6 class="text-muted">{{$element->product->name}}</h6>
+                                                        <h6 class="text-black mb-0">{{ \Illuminate\Support\Str::limit($element->product->description,40)}}</h6>
+                                                    @else
+                                                        <h6 class="text-muted">{{$element->menu->name}}</h6>
+                                                    @endif
+                                                </div>
+                                                <div class="col-md-3 col-lg-3 col-xl-3">
 
-                                            <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                                                <h6 class="mb-0">{{$element->product->price}}€</h6>
+                                                    @if($element->product_id != null && $element->extras!=null)
+                                                        @php
+                                                            $array_extras = explode(',',$element->extras);
+                                                            $extras = \App\Models\Extra::whereIn('id',$array_extras)->get();
+                                                        @endphp
+                                                        <ul>
+                                                            <p>Extras:</p>
+                                                            @foreach($extras as $extra)
+                                                                <li>{{$extra->name}}</li>
+                                                            @endforeach
+                                                        </ul>
+                                                    @endif
+                                                </div>
+
+                                                <div class="col-md-2 col-lg-2 col-xl-2">
+                                                    @if($element->product_id != null )
+                                                        <h6 class="mb-0">{{$element->product->price}}€</h6>
+                                                    @else
+                                                        <h6 class="mb-0">{{$element->menu->price}}€</h6>
+                                                    @endif
+                                                </div>
+                                                <div class="col-md-2 col-lg-2 col-xl-2 text-end">
+                                                    <button type="button" data-cart_id="{{$element->id}}"
+                                                            class="text-muted btnDeleteCartElement"><i
+                                                            class="fas fa-times"></i></button>
+                                                </div>
                                             </div>
-                                            <div class="col-md-2 col-lg-2 col-xl-2 text-end">
-                                                <button type="button" data-cart_id="{{$element->id}}" class="text-muted btnDeleteCartElement"><i class="fas fa-times"></i></button>
-                                            </div>
-                                        </div>
                                         @endforeach
                                         <div class="pt-5">
                                             <h6 class="mb-0"><a href="{{route('dashboard')}}" class="text-body"><i
-                                                        class="fas fa-long-arrow-alt-left me-2"></i>Volver a productos</a></h6>
+                                                        class="fas fa-long-arrow-alt-left me-2"></i>Volver a
+                                                    productos</a></h6>
                                         </div>
                                     </div>
                                 </div>
@@ -85,7 +119,8 @@
 
                                         <div class="d-flex justify-content-between mb-4">
                                             <h5 class="text-uppercase">Subtotal</h5>
-                                            <h5 id="subTotalPrice">{{ number_format(\App\CartHelper::getTotalAmount(),2)}}€</h5>
+                                            <h5 id="subTotalPrice">{{ number_format(\App\CartHelper::getTotalAmount(),2)}}
+                                                €</h5>
                                         </div>
 
                                         <h5 class="text-uppercase mb-3">Envío</h5>
@@ -100,7 +135,8 @@
 
                                         <div class="mb-4 pb-2">
                                             <select class="select">
-                                                <option value="1">{{\Illuminate\Support\Facades\Auth::user()->address}}</option>
+                                                <option
+                                                    value="1">{{\Illuminate\Support\Facades\Auth::user()->address}}</option>
                                             </select>
                                         </div>
 
@@ -108,11 +144,15 @@
 
                                         <div class="d-flex justify-content-between mb-5">
                                             <h5 class="text-uppercase">Precio total</h5>
-                                            <h5 id="totalPrice">{{ number_format(\App\CartHelper::getTotalAmount(),2) }}€</h5>
+                                            <h5 id="totalPrice">{{ number_format(\App\CartHelper::getTotalAmount(),2) }}
+                                                €</h5>
                                         </div>
 
-                                        <button type="button" class="btn btn-dark btn-block btn-lg"
-                                                data-mdb-ripple-color="dark">Pagar</button>
+                                        <form action="{{ url('charge') }}" method="post">
+                                            <input type="hidden" name="amount" value="{{\App\CartHelper::getTotalAmount()}}" />
+                                            {{ csrf_field() }}
+                                            <input type="submit" class="btn btn-success" name="submit" value="Pagar">
+                                        </form>
 
                                     </div>
                                 </div>
@@ -125,7 +165,7 @@
     </section>
 
     <script>
-        $('.btnDeleteCartElement').click((e)=>{
+        $('.btnDeleteCartElement').click((e) => {
             let id_cart = e.currentTarget.dataset.cart_id
             let url = '{{ route("destroy.cart", ":id") }}';
             url = url.replace(':id', id_cart);
@@ -137,10 +177,10 @@
                 dataType: 'json',
                 success: function (response) {
                     toastr.success(response.message)
-                    $('#cont_element_'+id_cart).remove();
-                    $('#line_element_'+id_cart).remove();
-                    $('#totalPrice').text(response.totalAmount+'€')
-                    $('#subTotalPrice').text(response.totalAmount+'€')
+                    $('#cont_element_' + id_cart).remove();
+                    $('#line_element_' + id_cart).remove();
+                    $('#totalPrice').text(response.totalAmount.toFixed(2) + '€')
+                    $('#subTotalPrice').text(response.totalAmount.toFixed(2) + '€')
                     $('#cartElements').text(response.cartCount)
                 },
                 error: function (error) {

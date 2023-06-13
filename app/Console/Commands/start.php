@@ -2,10 +2,10 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Hash;
 use App\Models\Rol;
 use App\Models\User;
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Hash;
 
 class start extends Command
 {
@@ -40,6 +40,6 @@ class start extends Command
      */
     public function handle()
     {
-        
+        return 0;
     }
 }

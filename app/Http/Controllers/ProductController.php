@@ -55,7 +55,7 @@ class ProductController extends Controller
         $p_minimo = 0;
 
         if ($request->p_max == null) {
-            $p_maximo = 999;
+            $p_maximo = 999999;
         } else {
             $p_maximo = $request->p_max;
         }

@@ -78,7 +78,7 @@
                 </div>
                 <div class="form-group">
                     <a class="" href="{{ route('login') }}">
-                        {{ __('Already registered?') }}
+                        ¿Ya estás registrado?
                     </a>
                 </div>
 
