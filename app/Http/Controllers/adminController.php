@@ -45,7 +45,12 @@ class adminController extends Controller
     }
 
     public function showMenusAdmin(){
-        $menus = Menu::all();
-        return view('admin.menus_index',compact('menus'));
+        if(Auth::user()->rol_id==2){
+            $menus = Menu::all();
+            return view('admin.menus_index',compact('menus'));
+        }else{
+            return redirect()->back();
+        }
+
     }
 }

@@ -178,7 +178,6 @@ class ProductController extends Controller
 
         } else {
             return response()->json(['status' => 'ok', 'message' => "No tienes permiso para hacer esto"], 403);
-
         }
     }
 }
