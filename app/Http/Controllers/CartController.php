@@ -10,18 +10,20 @@ use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
-    public function show (){
-        $cartElements = Cart::where('user_id',Auth::id())->get();
+    public function show()
+    {
+        $cartElements = Cart::where('user_id', Auth::id())->get();
 
-        return view ('cart.index',compact('cartElements'));
+        return view('cart.index', compact('cartElements'));
     }
+
     public function add(Request $request)
     {
         $product_id = $request->product_id;
-        if($request->isMenu==0){
+        if ($request->isMenu == 0) {
             $product = Product::find($request->product_id);
-            if($product->stock == 0){
-                return response()->json(['status'=>'error','message'=>'No hay stock.'],404);
+            if ($product->stock == 0) {
+                return response()->json(['status' => 'error', 'message' => 'No hay stock.'], 404);
             }
         }
 
@@ -40,20 +42,21 @@ class CartController extends Controller
             'extras' => $extras_json,
         ]);
 
-        $cartCount = Cart::where('user_id',Auth::id())->count();
-        return response()->json(['status'=>'ok','message'=>'Elemento añadido al carrito.','cartCount'=>$cartCount]);
+        $cartCount = Cart::where('user_id', Auth::id())->count();
+        return response()->json(['status' => 'ok', 'message' => 'Elemento añadido al carrito.', 'cartCount' => $cartCount]);
     }
 
-    public function destroy($id){
+    public function destroy($id)
+    {
         $cartElement = Cart::find($id);
-        if($cartElement){
+        if ($cartElement) {
             $cartElement->delete();
         }
 
-        return response()->json(['status'=>'ok','message'=>'Elemento del carrito eliminado.',
-            'totalAmount'=> CartHelper::getTotalAmount(),
-            'cartCount'=>CartHelper::cartCount()
-            ]);
+        return response()->json(['status' => 'ok', 'message' => 'Elemento del carrito eliminado.',
+            'totalAmount' => CartHelper::getTotalAmount(),
+            'cartCount' => CartHelper::cartCount()
+        ]);
 
     }
 }

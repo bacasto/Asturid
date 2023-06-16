@@ -9,6 +9,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rules;
 
 class RegisteredUserController extends Controller
@@ -37,7 +38,7 @@ class RegisteredUserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:40','min:5'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'password' => ['required', 'confirmed','regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]+$/' ,Rules\Password::defaults()],
             'phone'=>['required','string','max:15','min:5'],
             'address'=>['required','string','max:200','min:5'],
             'zip'=>['required','string','max:10','min:4'],
@@ -54,6 +55,14 @@ class RegisteredUserController extends Controller
             'zip'=>$request->zip,
         ]);
 
+        $subject = "Bienvenid@ a Asturid";
+        $data['name'] = $request->name;
+        $data['email'] = $request->email; //$event->user->email;
+        Mail::send('mail.mail_welcome_user',$data, function($msj) use($subject,$data){
+            $msj->from(env('MAIL_FROM_ADDRESS') ,"Bienvenid@");
+            $msj->subject($subject);
+            $msj->to($data['email']);
+        });
         event(new Registered($user));
 
         Auth::login($user);

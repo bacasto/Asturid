@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndexController;
 /*
@@ -13,10 +15,10 @@ use App\Http\Controllers\IndexController;
 |
 */
 
+
 Route::group(['middleware'=>'only.users'],function(){
     Route::get('/','App\Http\Controllers\ProductController@index')->name('dashboard');
     Route::get('/producto/{id}','App\Http\Controllers\ProductController@showProduct')->name('show.product');
-
     Route::get('/producto/categoria/{id}','App\Http\Controllers\ProductController@showProductCategory')->name('show.product.category');
     Route::post('products_search','App\Http\Controllers\ProductController@searchProducts')->name('search.products');
     Route::post('menus_search','App\Http\Controllers\MenuController@searchMenus')->name('search.menus');
@@ -24,7 +26,6 @@ Route::group(['middleware'=>'only.users'],function(){
     Route::get('/menu/{id}','App\Http\Controllers\MenuController@showMenu')->name('show.menu');
 
 });
-
 
 Route::group(['middleware'=>'auth'],function(){
     ## Profile
@@ -74,7 +75,6 @@ Route::group(['middleware'=>'auth'],function(){
     Route::get('error', 'App\Http\Controllers\PaymentController@error');
 
 });
-
 
 
 require __DIR__.'/auth.php';

@@ -92,7 +92,6 @@ class MenuController extends Controller
 
     public function update(Request $request)
     {
-
         if (Auth::user()->rol_id == 2) {
             $request->validate([
                 'name' => 'required|string',
