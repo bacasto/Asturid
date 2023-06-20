@@ -1,3 +1,6 @@
 .toast{
     opacity: 1!important;
 }
+.dropdown-menu{
+    left: -60px !important;
+}

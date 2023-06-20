@@ -47,6 +47,7 @@
                                    <li><a class="dropdown-item" href="{{route('show.products.admin')}}">Editar Productos</a></li>
                                    <li><a class="dropdown-item" href="{{route('show.menus.admin')}}">Editar Menús</a></li>
                                    <li><a class="dropdown-item" href="{{route('show.users.admin')}}">Editar Usuarios</a></li>
+                                   <li><a class="dropdown-item" href="{{route('show.cat.admin')}}">Editar Categorías</a></li>
                                @endif
                                <li><hr class="dropdown-divider"></li>
                                <li><a class="dropdown-item" href="#" onclick="

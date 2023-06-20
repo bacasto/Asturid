@@ -29,7 +29,7 @@
                 <h1>Menús</h1>
             </div>
             <div class="col-12 col-md-6 content_add_user">
-                <button type="button" data-bs-toggle="modal" data-bs-target="#modaladdmenu"  class="btn btn-primary">Añadir menu</button>
+                <button type="button" data-bs-toggle="modal" data-bs-target="#modaladdmenu"  class="btn btn-primary">Añadir menú</button>
             </div>
             <div class="col-12" id="content_menus">
                 @include('admin._partial_menus_admin',$menus)

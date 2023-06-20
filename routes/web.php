@@ -37,6 +37,7 @@ Route::group(['middleware'=>'auth'],function(){
     Route::get('/usuarios','App\Http\Controllers\AdminController@showUsersAdmin')->name('show.users.admin');
     Route::get('/menus_admin','App\Http\Controllers\AdminController@showMenusAdmin')->name('show.menus.admin');
     Route::get('/extras','App\Http\Controllers\ExtrasController@showExtrasAdmin')->name('show.extras.admin');
+    Route::get('/categorias','App\Http\Controllers\CategoryController@showCategoriesAdmin')->name('show.cat.admin');
 
     ##Products
     Route::post('/addproduct','App\Http\Controllers\ProductController@store')->name('add.producto');
@@ -57,6 +58,12 @@ Route::group(['middleware'=>'auth'],function(){
     Route::post('/addextra','App\Http\Controllers\ExtrasController@store')->name('add.extra');
     Route::post('/updateextra','App\Http\Controllers\ExtrasController@update')->name('update.extra');
     Route::get('/removeextra/{id}','App\Http\Controllers\ExtrasController@destroy')->name('destroy.extra');
+
+    #Categorias
+    Route::post('/addecat','App\Http\Controllers\CategoryController@store')->name('add.cat');
+    Route::post('/updatecat','App\Http\Controllers\CategoryController@update')->name('update.cat');
+    Route::get('/removecat/{id}','App\Http\Controllers\CategoryController@destroy')->name('destroy.cat');
+
 
     #Cart
     Route::post('/addcart','App\Http\Controllers\CartController@add')->name('add.cart');

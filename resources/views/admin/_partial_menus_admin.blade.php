@@ -52,7 +52,7 @@
 </div>
 <script>
     $('.btn_remove').click((e) => {
-        if (confirm("¿Estas seguro que deseas borrar este usuario?")) {
+        if (confirm("¿Estas seguro que deseas borrar este menú?")) {
             let menuId = e.currentTarget.dataset.menu_id;
             let url = '{{ route("destroy.menu", ":id") }}';
             url = url.replace(':id', menuId);

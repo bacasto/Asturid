@@ -34,7 +34,7 @@
 </div>
 <script>
     $('.btn_remove').click((e) => {
-        if (confirm("¿Estas seguro que deseas borrar este usuario?")) {
+        if (confirm("¿Estas seguro que deseas borrar este extra?")) {
             let extraId = e.currentTarget.dataset.extra_id;
             let url = '{{ route("destroy.extra", ":id") }}';
             url = url.replace(':id', extraId);

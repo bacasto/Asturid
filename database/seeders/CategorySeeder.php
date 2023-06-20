@@ -17,7 +17,7 @@ class CategorySeeder extends Seeder
         $categories = [
             'Bebidas','Pizzas','Pasta',
             'Ensaldas','Entrantes','Sopas',
-            'Carne','Pescado','Postres'
+            'Carne','Pestado','Postres'
         ];
         foreach($categories as $cat){
             Category::create([
